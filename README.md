@@ -1,87 +1,33 @@
-# Applications Webs MMIONE
+# Tailwind Color Stuck
 
-Le répertoire WebUI contient l'ensemble des applications et modules des interfaces graphiques MMI ONE basés sur Nuxt. 
+Small project to reproduce a stuck when running `pnpm run dev:prepare` on a Docker build
 
-## Structure
+## Step to reproduce 
 
-Le projet est séparé en plusieurs répertoires : 
-
-- apps : Répértoire contenant les applications graphiques
-- fct : Répertoire contenant les modules fonctionnels métiers
-- mmione-webui-fwk : Framework graphique et technique
-- models : Répertoire contenant les modules de communications avec les serveurs backend
-
-Le projet utilise **pnpm** comme gestionnaire de paquet pour permettre l'exécution de taches sur l'ensemble des modules 
-
-## Gestion de versions des dépendances 
-
-Pour assurer la cohérence des versions des dépendances sur tout le projet, la gestion des versions des dépendances s'effectue via un catalogue : **catalog.json**
-
-### Mise à jours des dépendances
-Pour mettre à jour une dépendance dans un module (création, modification): 
-
-- la version doit être ajoutée/modifiée dans **catalog.json**
-- lancer le script 
+From the root project path, launch the following command : 
 
 ```bash
-./ApplyCatalogVersion.bash
+docker build . -t mmi-order-front-office:latest
 ```
 
-Le script applique les versions du catalogue sur tous les package.json des modules dans lesquels elles sont utilisés.  
+The build will stuck after executing the module.ts of the mmione-webui-fwk
 
-Le script vérifie aussi que toutes les dépendances des modules sont bien référencés dans le catalogue. Dans le cas contraire, il lève des erreurs.
+## Solution to don't stuck 
 
-## Installation et lancement 
+In the module.ts file of the module mmione-webui-fwk, comment the tailwindcss hook : 
 
+```typescript
+    nuxt.hook("tailwindcss:config",
+      (tailwindConfig: Partial<Config>) => {
+        configureTailwind(tailwindConfig, srcResolver)
+      });
+```
 
-### Installation 
-
-A la racine **webui**, lancer l'installation avec : 
+Build the docker image :
 
 ```bash
-pnpm install
+docker build . -t mmi-order-front-office:latest
 ```
 
-### Génération des types pour les dépendances entre modules
+The build finish normally
 
-```bash
-pnpm run dev:prepare
-```
-
-### Lancement d'une application ou du playground d'un module
-
-Se rendre dans le répertoire de l'application ou du module puis lancer la commande :
-
-```bash
-pnpm run dev
-```
-
-## Build de production
-### Application statique
-
-Se rendre dans le répertoire de l'application et lancer : 
-
-```bash
-pnpm run generate
-```
-
-L'application statique peut ensuite être testée avec http-server :
-
-```bash
-cd dist
-http-server
-```
-
-### Application SSR
-
-Se rendre dans le répertoire de l'application et lancer :
-
-```bash
-pnpm run build
-```
-
-L'application SSR peut ensuite être testée avec :
-
-```bash
-pnpm run preview
-```
