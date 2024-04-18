@@ -1,0 +1,9 @@
+/* Css du framework graphique de MMI ONE WebUI */
+
+html {
+  transition: font-size 0.5s ease;
+}
+
+body {
+  @apply dark:bg-gray-950
+}

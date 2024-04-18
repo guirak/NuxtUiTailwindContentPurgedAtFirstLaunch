@@ -1,0 +1,15 @@
+{
+  "name": "mmi-webui",
+  "private": true,
+  "scripts": {
+    "dev:prepare": "pnpm recursive run dev:prepare",
+    "lint": "pnpm recursive run lint",
+    "test": "pnpm recursive run test"
+  },
+  "pnpm": {
+    "overrides": {}
+  },
+  "devDependencies": {
+    "nuxt": "^3.11.2"
+  }
+}
