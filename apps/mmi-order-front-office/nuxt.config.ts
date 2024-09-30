@@ -39,7 +39,7 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    'mmione-webui-fwk'
+    'mmi-fct-order-front-office'
   ],
   build: {
     transpile: ['rxjs']
@@ -66,5 +66,6 @@ export default defineNuxtConfig({
         buffer: 'buffer/',
       },
     },
-  }
+  },
+  compatibilityDate: '2024-09-28'
 })

@@ -1,33 +1,38 @@
-# Tailwind Color Stuck
+# Nuxt UI Tailwind content purged at first launch
 
-Small project to reproduce a stuck when running `pnpm run dev:prepare` on a Docker build
+Small project to reproduce a bug with the nuxt-ui tailwind css content. At first launch, css classes used in nuxt ui components are not correctly taken into account. 
+It's necessary to restart a second time the app to have the correct display
+
+The bug is present since the version 6.12.0 of next/tailwindcss. Maybe some effect of the First Class HMR.
 
 ## Step to reproduce 
 
-From the root project path, launch the following command : 
+- From the root project path, launch the following command : 
 
 ```bash
-docker build . -t mmi-order-front-office:latest
+# Clear the build  
+./scripts/CleanProject.bash
+
+# Install and prepare 
+pnpm i; pnpm run dev:prepare
+
+# Launch the app
+cd apps/mmi-order-front-office
+pnpm run dev
 ```
 
-The build will stuck after executing the module.ts of the mmione-webui-fwk
+**The tailwind classes used in apps and modules are correctly displayed but the tailwind classes defined in the nuxt-ui components are not taken into account.**
 
-## Solution to don't stuck 
-
-In the module.ts file of the module mmione-webui-fwk, comment the tailwindcss hook : 
-
-```typescript
-    nuxt.hook("tailwindcss:config",
-      (tailwindConfig: Partial<Config>) => {
-        configureTailwind(tailwindConfig, srcResolver)
-      });
-```
-
-Build the docker image :
+- Stop and restart the server
 
 ```bash
-docker build . -t mmi-order-front-office:latest
+pnpm run dev
 ```
 
-The build finish normally
+** All tailwind classes are correctly taken into account.**
+
+
+
+The problem is present too when building the prod version with **pnpm run build** or when running the docker image built with **docker build . -t mmi-order-front-office:latest**
+
 

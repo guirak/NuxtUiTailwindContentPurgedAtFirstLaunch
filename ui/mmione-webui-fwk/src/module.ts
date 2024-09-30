@@ -1,9 +1,6 @@
-import {addPlugin, createResolver, defineNuxtModule, installModule, useLogger} from "@nuxt/kit";
+import {addImportsDir, addPlugin, createResolver, defineNuxtModule, installModule, useLogger} from "@nuxt/kit";
 import * as fs from "fs";
 import * as path from "path";
-import {configureTailwind} from "./tailwind";
-// @ts-ignore
-import type {Config} from "tailwindcss";
 
 
 const logger = useLogger("module.ts");
@@ -57,13 +54,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     const runtimeDir = srcResolver.resolve("./runtime");
 
-    // Configuration de Tailwind CSS
-    // @ts-ignore
-    nuxt.hook("tailwindcss:config",
-      (tailwindConfig: Partial<Config>) => {
-        configureTailwind(tailwindConfig, srcResolver)
-      });
-
     // Ajout du plugin du framework
     addPlugin({
       src: srcResolver.resolve(runtimeDir, "plugins", "plugin")
@@ -81,6 +71,10 @@ export default defineNuxtModule<ModuleOptions>({
     // Ajout du css
     nuxt.options.css.push(srcResolver.resolve(runtimeDir, 'webui-fwk.css'))
 
+    // Ajout des config
+    const configDirectories = getDirectoriesRecursively(path.join(runtimeDir, "config"));
+    logger.info("Ajout des config des répertoires : ", configDirectories);
+    addImportsDir(configDirectories);
 
     // Couleur primaire de l'application
     // @ts-ignore

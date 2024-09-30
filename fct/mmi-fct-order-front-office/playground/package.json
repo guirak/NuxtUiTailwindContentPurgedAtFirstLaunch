@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "mmi-fct-order-playground",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate"
+  },
+  "dependencies": {
+    "@nuxt/kit": "npm:@nuxt/kit@latest"
+  },
+  "devDependencies": {
+    "nuxt": "latest"
+  }
+}

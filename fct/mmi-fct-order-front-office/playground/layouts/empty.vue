@@ -14,17 +14,11 @@
   -->
 
 <template>
-  <div class="flex flex-col gap-2 w-md">
-    <div class="bg-green-500">Tailwind Color Stuck</div>
-    <UButton label="Nuxt ui button"/>
-
-    <UserField label="Username" placeholder="Enter your username" icon="i-fa-solid-user"/>
-    <FctUserField label="Fct Username" placeholder="Enter your username" icon="i-fa-solid-user"/>
-  </div>
+  <FwkEmptyLayout>
+    <slot/>
+  </FwkEmptyLayout>
 </template>
 
 <script setup lang="ts">
 
-import UserField from "@mmiUIFwk/components/UserField.vue";
-import FctUserField from "@mmiFctOrderFo/components/FctUserField.vue";
 </script>

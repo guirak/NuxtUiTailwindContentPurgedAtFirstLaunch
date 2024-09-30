@@ -1,0 +1,51 @@
+{
+  "name": "mmi-fct-order-front-office",
+  "version": "1.0.0",
+  "description": "Module fonctionnelle de prise de commandes",
+  "license": "Copyright",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.13.2",
+    "@nuxt/ui": "^2.18.6",
+    "@pinia/nuxt": "^0.5.4",
+    "lodash": "^4.17.21",
+    "mmione-webui-fwk": "workspace:*",
+    "@vueuse/core": "11.1.0",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.5.1",
+    "@nuxt/eslint-config": "^0.5.7",
+    "@nuxt/module-builder": "^0.8.4",
+    "@nuxt/schema": "^3.13.2",
+    "@nuxt/test-utils": "^3.14.2",
+    "@types/lodash": "^4.17.9",
+    "@types/node": "^22.7.4",
+    "changelogen": "^0.5.5",
+    "eslint": "^8.57.0",
+    "nuxt": "^3.13.2",
+    "vitest": "^2.1.1"
+  }
+}

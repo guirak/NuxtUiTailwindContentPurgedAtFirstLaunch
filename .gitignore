@@ -43,3 +43,6 @@ out/
 *.tfstate
 *.tfstate.backup
 *.tfvars
+
+!**/node_modules/**
+node_modules/
